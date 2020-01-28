@@ -1,0 +1,105 @@
+<section>
+  <form #formCalculator="ngForm" novalidate>
+    <div [ngClass]="'container'">
+      <div [ngClass] ="'header form-group row'">
+        <div [ngClass]= "'layout'">
+          <div [ngClass]= "'title'">
+            <h1>{{ title }}</h1>
+          </div>
+          <div [ngClass]="'message'">
+            <app-alert></app-alert>
+          </div>
+        </div>
+      </div>
+      <div [ngClass]="'sum'">Sum:</div>
+      <div [ngClass]="'sumCalc operand1'">
+        <input type="text" (blur)="doShowHide(true)" pattern="^\d{1,}(\.{0,1}\d{0,2})$" minlength="1" [(ngModel)]="Operand1_Sum" name="sumOperand1" #sumOperand1="ngModel">
+        <div [ngClass]="'alert alert-danger'" [hidden]="sumOperand1.valid || sumOperand1.pristine">
+          The value for this field is invalid.
+        </div>
+      </div>
+      <div [ngClass]="'sumCalc signal'">
+        <span>+</span>
+      </div>
+      <div [ngClass]="'sumCalc operand2'">
+        <input (blur)="doShowHide(true)" type="text" pattern="^\d{1,}(\.{0,1}\d{0,2})$" minlength="1" [(ngModel)]="Operand2_Sum" name="sumOperand2" #sumOperand2="ngModel">
+        <div [ngClass]="'alert alert-danger'" [hidden]="sumOperand2.valid || sumOperand2.pristine">
+          The value for this field is invalid.
+        </div>
+      </div>
+      <div [ngClass]="'sumCalc button'">
+        <button type="submit" (click)="doAddition(Operations.Addition)" [disabled]="!formCalculator.form.valid ||  (sumOperand1.pristine || sumOperand2.pristine)">=</button>
+      </div>
+      <div [ngClass]="'sumCalc values'">
+        <label [ngClass]="'alert alert-success w-100'" [hidden]="!(selectedOperation != null && selectedOperation == Operations.Addition && !isHide)"> {{ result }}</label>
+      </div>
+      <div [ngClass]="'difference'">Difference:</div>
+      <div [ngClass]="'differenceCalc operand1'">
+        <input (blur)="doShowHide(true)" type="text" pattern="^\d{1,}(\.{0,1}\d{0,2})$" minlength="1" [(ngModel)]="Operand1_Diff" name="diffOperand1" #diffOperand1="ngModel">
+        <div [ngClass]="'alert alert-danger'" [hidden]="diffOperand1.valid || diffOperand1.pristine">
+          The value for this field is invalid.
+        </div>
+      </div>
+      <div [ngClass]="'differenceCalc signal'">
+        <span>-</span>
+      </div>
+      <div [ngClass]="'differenceCalc operand2'">
+        <input (blur)="doShowHide(true)" type="text" pattern="^\d{1,}(\.{0,1}\d{0,2})$" minlength="1" [(ngModel)]="Operand2_Diff" name="diffOperand2" #diffOperand2="ngModel">
+        <div [ngClass]="'alert alert-danger'" [hidden]="diffOperand2.valid || diffOperand2.pristine">
+          The value for this field is invalid.
+        </div>
+      </div>
+      <div [ngClass]="'differenceCalc button'">
+        <button type="submit" (click)="doDifference(Operations.Difference)"  [disabled]="!formCalculator.form.valid || (diffOperand1.pristine || diffOperand2.pristine)">=</button>
+      </div>
+      <div [ngClass]="'differenceCalc values'">
+        <label [ngClass]="'alert alert-success w-100'"  [hidden]="!(selectedOperation != null && selectedOperation == Operations.Difference && !isHide)"> {{ result }}</label>
+      </div>
+      <div [ngClass]="'product'">Product:</div>
+      <div [ngClass]="'productCalc operand1'">
+        <input (blur)="doShowHide(true)" type="text" pattern="^\d{1,}(\.{0,1}\d{0,2})$" minlength="1" [(ngModel)]="Operand1_Prod" name="prodOperand1" #prodOperand1="ngModel">
+        <div [ngClass]="'alert alert-danger'" [hidden]="prodOperand1.valid || prodOperand1.pristine">
+          The value for this field is invalid.
+        </div>
+      </div>
+      <div [ngClass]="'productCalc signal'">
+        <span>*</span>
+      </div>
+      <div [ngClass]="'productCalc operand2'">
+        <input (blur)="doShowHide(true)" type="text" pattern="^\d{1,}(\.{0,1}\d{0,2})$" minlength="1" [(ngModel)]="Operand2_Prod" name="prodOperand2" #prodOperand2="ngModel">
+        <div [ngClass]="'alert alert-danger'" [hidden]="prodOperand2.valid || prodOperand2.pristine">
+          The value for this field is invalid.
+        </div>
+      </div>
+      <div [ngClass]="'productCalc button'">
+        <button type="submit" (click)="doProduct(Operations.Product)"  [disabled]="!formCalculator.form.valid || (prodOperand2.pristine || prodOperand2.pristine)">=</button>
+      </div>
+      <div [ngClass]="'productCalc values'">
+        <label [ngClass]="'alert alert-success w-100'"  [hidden]="!(selectedOperation != null && selectedOperation == Operations.Product && !isHide)"> {{ result }}</label>
+      </div>
+      <div [ngClass]="'quotient'">Quotient:</div>
+      <div [ngClass]="'quotientCalc operand1'">
+        <input (blur)="doShowHide(true)" type="text" pattern="^\d{1,}(\.{0,1}\d{0,2})$" minlength="1" [(ngModel)]="Operand1_Quot" name="quotOperand1" #quotOperand1="ngModel">
+        <div [ngClass]="'alert alert-danger'" [hidden]="quotOperand1.valid || quotOperand1.pristine">
+          The value for this field is invalid.
+        </div>
+      </div>
+      <div [ngClass]="'quotientCalc signal'">
+        <span>/</span>
+      </div>
+      <div [ngClass]="'quotientCalc operand2'">
+        <input (blur)="doShowHide(true)" type="text" pattern="^\d{1,}(\.{0,1}\d{0,2})$" minlength="1" [(ngModel)]="Operand2_Quot" name="quotOperand2" #quotOperand2="ngModel">
+        <div [ngClass]="'alert alert-danger'" [hidden]="quotOperand2.valid || quotOperand2.pristine">
+          The value for this field is invalid.
+        </div>
+      </div>
+      <div [ngClass]="'quotientCalc button'">
+        <button type="submit" (click)="doQuotient(Operations.Quotient)"  [disabled]="!formCalculator.form.valid || (quotOperand1.pristine || quotOperand2.pristine)">=</button>
+      </div>
+      <div [ngClass]="'quotientCalc values'">
+        <label [ngClass]="'alert alert-success w-100'"  [hidden]="!(selectedOperation != null && selectedOperation == Operations.Quotient && !isHide)"> {{ result }}</label>
+      </div>
+    </div>
+
+  </form>
+</section>
